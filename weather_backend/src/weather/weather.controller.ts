@@ -1,24 +1,22 @@
-import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException, UseGuards } from '@nestjs/common';
 import { WeatherService } from './weather.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('weather')
 export class WeatherController {
   constructor(private readonly weatherService: WeatherService) { }
 
-  // Removed @UseGuards(AuthGuard('jwt')) to allow access without authentication
   @Get()
   async getAll() {
     const res = await this.weatherService.getAllWeather();
     return { data: res.data, cacheHit: res.cacheHit };
   }
 
-  // Removed @UseGuards(AuthGuard('jwt'))
   @Get('cache')
   cacheStatus() {
     return this.weatherService.getCacheStatus();
   }
 
-  // Removed @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async getById(@Param('id') id: string) {
     const cityId = parseInt(id, 10);

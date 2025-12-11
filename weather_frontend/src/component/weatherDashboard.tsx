@@ -33,7 +33,7 @@ export default function WeatherDashboard() {
             setLoading(true);
             setError(null);
 
-            // Use the API client function
+            // Use the API client function directly
             const result = await getAllWeather();
             setWeather(result.data);
         } catch (err) {
